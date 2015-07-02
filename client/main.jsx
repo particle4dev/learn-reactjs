@@ -1,4 +1,4 @@
-var List = React.createClass({
+List = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
     // This method knows how to listen to Meteor's reactive data sources,
@@ -14,7 +14,8 @@ var List = React.createClass({
         {/* Access the data from getMeteorData() on this.data */}
         {
           this.data.tasks.map(function (task) {
-            return <li key={task._id}>{task.content} {task.isSimulation23}</li>;
+            var path = FlowRouter.path('post', {_id: task._id})
+            return <li key={task._id}> <a href={path} > {task.content} {task.isSimulation23} </a></li>;
           })
         }
       </ul>
@@ -22,7 +23,7 @@ var List = React.createClass({
   }
 });
 
-var NewTaskForm = React.createClass({
+NewTaskForm = React.createClass({
   onSubmit(event) {
     event.preventDefault();
 
@@ -54,7 +55,6 @@ App = React.createClass({
 });
 if (Meteor.isClient) {
   Meteor.startup(function () {
-    app = React.render(<AppLayout />, document.getElementById('root'));
-    console.log(app);
+
   });
 }
